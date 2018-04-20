@@ -1,7 +1,3 @@
-# import sys
-# get_ipython().system('{sys.executable} -m pip install lyricsgenius')
-# get_ipython().system('{sys.executable} -m pip install spotipy')
-# get_ipython().system('{sys.executable} -m pip install selenium')
 import pandas as pd
 import requests
 import lyricsgenius as genius
@@ -9,9 +5,6 @@ import spotipy
 import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-
-
-# In[7]:
 
 genius_client_id = 'Qeii-UKMUUwsAYCuuemsF7CZk7R2bFDhjP1FMkqpozASvYsA4wQDlLmd2JFM3Vhm'
 genius_secret_id = 'fWhV7VtwAL-5D32Ga9Y0Kyh_VFEo7XK0Jf8-3RMcZ5EoMXqsDpmFWFFPyobnibfMXJuJ-GZe69YEuXR-36VGAA'
@@ -24,9 +17,8 @@ driver_path = "/mnt/c/Users/jeffr/Downloads/chromedriver_win32/chromedriver.exe"
 artist_url = 'https://www.ranker.com/crowdranked-list/the-greatest-rappers-of-all-time'
 page_downs = 0
 api = genius.Genius(genius_client_access_token)
+spotify = spotipy.Spotify()
 
-
-# In[8]:
 
 def get_artists(url, page_downs, driver_path):
     driver = webdriver.Chrome(driver_path)
@@ -43,23 +35,15 @@ def get_artists(url, page_downs, driver_path):
     return names
 
 
-# In[9]:
-
 def get_songs(artist):
     return api.search_artist(artist, verbose=False, max_songs=2)
 
 
-# In[11]:
-
 artists = get_artists(artist_url, page_downs, driver_path)
 
 
-# In[68]:
-
 print(artists)
 
-
-# In[69]:
 
 music = []
 for artist in artists:
@@ -69,12 +53,8 @@ for artist in artists:
         pass
 
 
-# In[79]:
-
 print(music)
 
-
-# In[107]:
 
 df = pd.DataFrame()
 df['artist'] = list(map(lambda x: x.artist, music))
@@ -83,19 +63,8 @@ df['album'] = list(map(lambda x: x.album, music))
 df['lyrics'] = list(map(lambda x: x.lyrics, music))
 print(df.head())
 
-
-# In[37]:
-
-# headers = {'Authorization': 'Bearer %s' % genius_client_access_token}
-# search_url = base_url + '/search'
-# song_title = 'Mercy'
-# params = {'q': song_title}
-# response = requests.get(search_url, params=params, headers=headers)
-# json = response.json()
-# print(json)
-
-
-# In[ ]:
-
 df.to_csv('genius.csv')
 
+spotify = spotipy.Spotify()
+spotify_artists = [spotify.search(q='artist:' + artist, type='artist') for artist in artists]
+print(spotify_artists)
