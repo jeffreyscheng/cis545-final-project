@@ -1,0 +1,10 @@
+One possibility is to use some fixed basis functions, and to learn a linear combination of these from the
+training data. Instead, neural network models allow the feature or basis functions to themselves be chosen
+adaptively based on the training data. Moreover, they allow extraction of increasingly complex features by
+allowing intermediate feature extraction units to be stacked in layers, so that features produced by units in
+one layer can be used as inputs to the feature extraction units in the next layer, and so on.
+As an example, consider a model with one layer of intermediate feature extraction units (one hidden layer).
+Each feature extraction unit, referred to as a hidden unit, extracts a nonlinear feature from the input vector
+x by first linearly combining the input features, and then applying a nonlinear transformation to this linear
+combination. Specifically, suppose there are d1 hidden units in the hidden layer. The j-th hidden unit
+produces a feature or 'activation' value
